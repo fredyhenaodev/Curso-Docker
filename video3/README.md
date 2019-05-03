@@ -1,0 +1,5 @@
+# Instalación de Docker para Mac y Windows
+
+Docker es una herramienta que nació y fue hecha para trabajar en Linux, pero con el gran crecimiento que tuvo, también se diseñó para poder ser utilizado en equipos Mac y Windows. En esta lección, veremos cómo podemos hacer la instalación en ambas versiones para poder trabajar con Docker sin tener que cambiar de sistema operativo.
+
+Actualmente existen dos versiones de Docker, Enterprise Edition (EE) y Community Edition (CE), para esta ocasión nos vamos a enfocar en hacer la instalación de la Community Edition, esta versión viene en otras dos sub-versiones, edge y stable, la versión edge es la que tiene los cambios más recientes pero puede estar propensa a fallas, en cambio la versión stable (como su nombre lo indica) es más estable, funcional y menos propensa a fallas por lo que será la versión que estaremos utilizando.
