@@ -16,6 +16,11 @@ docker pull NOMBRE_DE_LA_IMAGEN
 docker run NOMBRE_DE_LA_IMAGEN
 ```
 
+* Parar un contenedor
+```sh
+docker stop $(docker ps -q)
+```
+
 * Mostrar archivos y directorios de la imagen
  ```sh
 docker run NOMBRE_DE_LA_IMAGEN ls /
