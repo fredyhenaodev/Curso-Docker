@@ -18,6 +18,10 @@ En la lección anterior vimos cómo podemos crear una imagen de Docker utilizand
 ```sh
 docker build -t NOMBRE_IMAGEN:TAB RUTA_CONTEXTO_DOCKER
 ```
+* Construir la imagen de docker basandose en el archivo Dockerfile y la ruta
+```sh
+docker build -f RUTA_DOCKERFILE -t NOMBRE_IMAGEN:TAB RUTA_CONTEXTO_DOCKER
+```
 
 #### Ejemplo de un Dockerfile
 
