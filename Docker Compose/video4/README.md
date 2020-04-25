@@ -17,11 +17,28 @@ chmod +x NAME_FILE
 #!/usr/bin/env bash
 
 COMPOSE="docker-compose"
+PSRESULT=$(docker-compose ps -q)
+
+if [ ! =z "$PSRESULT" ]; then
+    EXEC="yes"
+else
+    EXEC="no"
+fi
 
 if [ $# -gt 0 ]; then
+
+    if [ -f .env ]; then
+        source .env
+    fi
+
+    if [ "$1" == "start" ]; then
+        $COMPOSE up -d
+    elif [ "$1" == "stop" ]; then
+        $COMPOSE down
+
     # si el argumento es "art" utilizar
     # comandos de artisan en un nuevo contenedor "php ->nombre servicio en el archivo docker-compose"
-    if [ "$1" == "art" ]; then
+    elif [ "$1" == "art" ]; then
         shift 1
         $COMPOSE RUN --rm \
             -w /var/www/html \
@@ -30,41 +47,71 @@ if [ $# -gt 0 ]; then
     # ejecutar tareas de composer
     elif [ "$1" == "composer" ]; then
         shift 1
-        $COMPOSE RUN --rm \
-            -w /var/www/html \
-            php \
-            composer "$@"
+        if [ "$EXEC" == "yes" ]; then
+            $COMPOSE exec \
+                php \
+                composer "$@"
+        else
+            $COMPOSE RUN --rm \
+                -w /var/www/html \
+                php \
+                composer "$@"
+        fi
     # ejecutar pruebas de phpunit
     elif [ "$1" == "test" ]; then
         shift 1
-        $COMPOSE RUN --rm \
-            -w /var/www/html \
-            php \
-            ./vendor/bin/phpunit "$@"
+        if [ "$EXEC" == "yes" ]; then
+            $COMPOSE exec \
+                php \
+                ./vendor/bin/phpunit "$@"
+        else
+            $COMPOSE RUN --rm \
+                -w /var/www/html \
+                php \
+                ./vendor/bin/phpunit "$@"
+        fi
     # si "npm" es utilizado, correr npm
     # desde nuestro contenedor nodo
     elif [ "$1" == "npm" ]; then
         shift 1
-        $COMPOSE RUN --rm \
-            -w /var/www/html \
-            node \
-            npm "$@"
+        if [ "$EXEC" == "yes" ]; then
+            $COMPOSE exec \
+                node \
+                npm "$@"
+        else
+            $COMPOSE RUN --rm \
+                -w /var/www/html \
+                node \
+                npm "$@"
+        fi
     # si "gulp" es utilizado, correr gulp
     # desde nuestro contenedor nodo
     elif [ "$1" == "gulp" ]; then
         shift 1
-        $COMPOSE RUN --rm \
-            -w /var/www/html \
-            node \
-            ./node_modules/.bin/gulp "$@"
+        if [ "$EXEC" == "yes" ]; then
+            $COMPOSE exec \
+                node \
+                ./node_modules/.bin/gulp "$@"
+        else
+            $COMPOSE RUN --rm \
+                -w /var/www/html \
+                node \
+                ./node_modules/.bin/gulp "$@"
+        fi
     # si "yarn" es utilizado, correr yarn
     # desde nuestro contenedor nodo
     elif [ "$1" == "yarn" ]; then
         shift 1
-        $COMPOSE RUN --rm \
-            -w /var/www/html \
-            node \
-            yarn "$@"
+        if [ "$EXEC" == "yes" ]; then
+            $COMPOSE exec \
+                node \
+                yarn "$@"
+        else
+            $COMPOSE RUN --rm \
+                -w /var/www/html \
+                node \
+                yarn "$@"
+        fi
     else
         $COMPOSE "$@"
     fi
