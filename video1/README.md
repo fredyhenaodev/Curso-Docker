@@ -1,5 +1,7 @@
-#Docker
+# Docker
 
+# Link del repositorio del curso
+<a href="https://github.com/dimitriacosta/curso-de-docker">Repositorio curso-docker</a>
 
 Docker es una implementación de las tecnologías de virtualización basadas en contenedores. Las tecnologías de virtualización nos permiten, a partir de software, crear una versión virtual de un recurso tecnológico, desde una pequeña terminal hasta un sistema operativo completo. Docker lleva la virtualización un paso más lejos utilizando su motor de contenedores, pero para poder comprender bien este concepto es necesario remontarnos un poco al pasado.
 

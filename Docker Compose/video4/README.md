@@ -36,10 +36,35 @@ if [ $# -gt 0 ]; then
             composer "$@"
     # ejecutar pruebas de phpunit
     elif [ "$1" == "test" ]; then
+        shift 1
         $COMPOSE RUN --rm \
             -w /var/www/html \
             php \
             ./vendor/bin/phpunit "$@"
+    # si "npm" es utilizado, correr npm
+    # desde nuestro contenedor nodo
+    elif [ "$1" == "npm" ]; then
+        shift 1
+        $COMPOSE RUN --rm \
+            -w /var/www/html \
+            node \
+            npm "$@"
+    # si "gulp" es utilizado, correr gulp
+    # desde nuestro contenedor nodo
+    elif [ "$1" == "gulp" ]; then
+        shift 1
+        $COMPOSE RUN --rm \
+            -w /var/www/html \
+            node \
+            ./node_modules/.bin/gulp "$@"
+    # si "yarn" es utilizado, correr yarn
+    # desde nuestro contenedor nodo
+    elif [ "$1" == "yarn" ]; then
+        shift 1
+        $COMPOSE RUN --rm \
+            -w /var/www/html \
+            node \
+            yarn "$@"
     else
         $COMPOSE "$@"
     fi
